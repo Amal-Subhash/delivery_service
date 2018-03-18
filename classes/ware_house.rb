@@ -1,5 +1,6 @@
 class WareHouse
-  attr_accessor :name, :code, :address, :pick_up_spots, :active_processes
+  attr_reader :name, :code, :address, :pick_up_spots, :items_hash
+  attr_accessor :active_processes
 
   def initialize(name, code, address, items_hash)
     @name = name
@@ -10,25 +11,28 @@ class WareHouse
     @pick_up_spots = []
 
     Struct.new("Pick_up", :name, :code, :status)
-    (0..1).each do |i|
+    (1..3).each do |i|
       @pick_up_spots << Struct::Pick_up.new("spot#{i}", "code#{i}", "available")
     end
-
     @active_processes = 0
   end
 
-  # Method of getting the available pick up spot of ware house.
+  # Method of getting the available pick up spot of a ware house.
   def get_pick_up_spot
+    @active_processes+= 1
     @pick_up_spots.each do |spot|
       return spot if spot.status == "available"
     end
   end
 
+  # Method for getting count of the item stored at warehouse.
   def get_item_count(item_code)
-  	@items_hash[item_code][:count]
+    @items_hash[item_code][:count]
   end
 
+  # Method for getting item stored at warehouse.
   def get_item(item_code)
+    @items_hash[item_code][:count]-= 1
     @items_hash[item_code][:item]
   end
 end

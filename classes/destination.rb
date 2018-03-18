@@ -8,17 +8,13 @@ class Destination
     @delivered = false
   end
 
+  # Method for printing the item delivery status, after the drone has collected
+  # customer signature and updated the value for delivered attribute of destination.
   def item_delivery_status(item)
-  	if item_delivered?
-    	puts "\n The item #{item.name} has been delivered"
+    if @delivered
+      puts "\nThe item #{item.name} has been delivered"
     else
-    	puts "\n The item #{item.name} has not been delivered"
+      puts "\nThe item #{item.name} has not been delivered"
     end
   end
-
-  # Boolean Method to check whether item has been delivered
-  def item_delivered?
-    @delivered
-  end
-
 end
